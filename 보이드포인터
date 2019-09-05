@@ -1,0 +1,34 @@
+#include <stdio.h>
+
+
+typedef struct {
+  short v1 = 0xAAAA;
+  int v2 = 0xBBBBDDDD;
+  } struct1, *pStruct1;
+  
+typedef struct {
+  int v1;
+  short v2;
+} strut2, *pStruct2;
+
+void foo(void* vptr) {
+  pStruct2 s2 = (pStruct2)vptr;
+  printf("%X/n", s2->v1);
+  printf("%hX/n", s2->v2);
+  //출력값 CCCCAAAA (CCCC는 아무것도 들어있지 않는 포인터의 주소값에 대신해 들어간 값이다.)
+  //      DDDD (int형 short으로 캐스팅 되면서 자료 잘림)
+  
+  pStruct1 s22 = (pStruct1)vptr;
+  printf("%X/n", s22->v1);
+  printf("%hX/n", s22->v2);
+  //출력값 AAAA
+  //      BBBBDDDD
+  
+}
+
+int main() {
+struct1 s1;
+foo(%s1);
+
+return 0;
+}
